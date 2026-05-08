@@ -1,12 +1,11 @@
 services:
   - type: web
     name: portfolio-api
-    env: java
-    region: singapore   # closest to India; change to "oregon" if latency is acceptable
+    env: docker
+    region: singapore
     plan: free
     rootDir: portfolio-api
-    buildCommand: mvn clean package -DskipTests
-    startCommand: java -jar target/portfolio-api-1.0-SNAPSHOT.jar
+    dockerfilePath: portfolio-api/Dockerfile
     healthCheckPath: /ping
     envVars:
       - key: DB_URL
@@ -14,4 +13,4 @@ services:
       - key: DB_USERNAME
         value: avnadmin
       - key: DB_PASSWORD
-        sync: false   # secret — enter manually in Render dashboard
+        sync: false
