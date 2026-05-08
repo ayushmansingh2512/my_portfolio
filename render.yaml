@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: portfolio-api
+    env: java
+    region: singapore   # closest to India; change to "oregon" if latency is acceptable
+    plan: free
+    rootDir: portfolio-api
+    buildCommand: mvn clean package -DskipTests
+    startCommand: java -jar target/portfolio-api-1.0-SNAPSHOT.jar
+    healthCheckPath: /ping
+    envVars:
+      - key: DB_URL
+        value: jdbc:postgresql://pg-273672a8-ayushmansingh2512-3047.d.aivencloud.com:12413/defaultdb?sslmode=require
+      - key: DB_USERNAME
+        value: avnadmin
+      - key: DB_PASSWORD
+        sync: false   # secret — enter manually in Render dashboard

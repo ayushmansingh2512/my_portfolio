@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'American Typewriter';
+  src: url('../assets/fonts/ufonts.com_american-typewriter-light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'American Typewriter';
+  src: url('../assets/fonts/ufonts.com_american-typewriter.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'American Typewriter';
+  src: url('../assets/fonts/ufonts.com_american-typewriter-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-sans: 'American Typewriter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'American Typewriter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}

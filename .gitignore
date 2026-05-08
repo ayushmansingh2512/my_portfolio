@@ -1,0 +1,40 @@
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.iml
+.classpath
+.project
+.settings/
+
+# Node
+**/node_modules/
+**/dist/
+**/dist-ssr/
+**/build/
+*.local
+
+# Java / Maven / Gradle
+**/target/
+**/*.class
+**/*.jar
+**/*.war
+**/*.ear
+**/*.log
+
+# Local admin app (contains secrets)
+/portfolio-admin/
+
+# Env / Secrets
+**/.env
+**/.env.*
+!.env.example
+
+# Spring Boot secrets (move to env vars)
+**/application.properties
