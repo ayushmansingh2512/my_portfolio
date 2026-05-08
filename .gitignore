@@ -37,4 +37,4 @@ Thumbs.db
 !.env.example
 
 # Spring Boot secrets (move to env vars)
-**/application.properties
+ 
