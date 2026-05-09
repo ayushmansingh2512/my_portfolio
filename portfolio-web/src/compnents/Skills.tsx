@@ -17,7 +17,7 @@ const Skills: React.FC = () => {
   const [activeTab, setActiveTab] = useState<SkillCategory>('Languages');
   const [isDragging, setIsDragging] = useState(false);
   const filterRef = useRef<HTMLDivElement | null>(null);
-  const dragState = useRef({ startX: 0, scrollLeft: 0, hasDragged: false });
+  const dragState = useRef({ startX: 0, scrollLeft: 0, hasDragged: false, isPointerDown: false });
 
   const skillMap: Record<SkillCategory, SkillData> = {
     'Languages': {
@@ -85,18 +85,23 @@ const Skills: React.FC = () => {
           dragState.current = {
             startX: event.clientX,
             scrollLeft: el.scrollLeft,
-            hasDragged: false
+            hasDragged: false,
+            isPointerDown: true
           };
-          setIsDragging(true);
         }}
         onPointerMove={(event) => {
-          if (event.pointerType !== "mouse" || !isDragging) return;
+          if (event.pointerType !== "mouse" || !dragState.current.isPointerDown) return;
           const el = filterRef.current;
           if (!el) return;
           const dx = event.clientX - dragState.current.startX;
-          if (Math.abs(dx) > 4) dragState.current.hasDragged = true;
-          el.scrollLeft = dragState.current.scrollLeft - dx;
-          event.preventDefault();
+          if (Math.abs(dx) > 4) {
+            if (!dragState.current.hasDragged) {
+              dragState.current.hasDragged = true;
+              setIsDragging(true);
+            }
+            el.scrollLeft = dragState.current.scrollLeft - dx;
+            event.preventDefault();
+          }
         }}
         onPointerUp={(event) => {
           if (event.pointerType !== "mouse") return;
@@ -104,6 +109,7 @@ const Skills: React.FC = () => {
           if (el && el.hasPointerCapture(event.pointerId)) {
             el.releasePointerCapture(event.pointerId);
           }
+          dragState.current.isPointerDown = false;
           setIsDragging(false);
         }}
         onPointerCancel={(event) => {
@@ -112,6 +118,7 @@ const Skills: React.FC = () => {
           if (el && el.hasPointerCapture(event.pointerId)) {
             el.releasePointerCapture(event.pointerId);
           }
+          dragState.current.isPointerDown = false;
           setIsDragging(false);
         }}
         onClickCapture={(event) => {
