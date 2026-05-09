@@ -658,3 +658,240 @@ body {
     right: 0.8rem;
   }
 }
+
+
+/* ─────────────────────────────────────────
+   RESPONSIVE  —  replace the existing
+   @media block at the bottom of your CSS
+───────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* ── Layout resets ── */
+  body {
+    padding: 0 1rem;
+    font-size: 0.96rem;
+  }
+
+  .header,
+  .section-divider,
+  .currently-working,
+  .experience-section,
+  .skills-section,
+  .education-section,
+  .contact-cta,
+  .footer {
+    width: 100%;
+  }
+
+  /* ── Toggle ── */
+  .theme-toggle {
+    top: 0.8rem;
+    right: 0.8rem;
+    width: 34px;
+    height: 34px;
+  }
+
+  /* ── Header ── */
+  .header {
+    margin-top: 44px;
+  }
+
+  .name {
+    font-size: clamp(2rem, 10vw, 2.8rem);
+    word-break: break-word;
+  }
+
+  .tagline {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    line-height: 1.7;
+  }
+
+  .bio {
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  /* ── Links row: stack cleanly, bigger tap targets ── */
+  .links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+    row-gap: 0.75rem;
+  }
+
+  .links a {
+    font-size: 0.82rem;
+    padding: 0.15rem 0;          /* slightly taller tap area */
+    min-height: 28px;
+    align-items: center;
+  }
+
+  .cv-btn {
+    font-size: 0.74rem;
+    padding: 0.5rem 1rem;
+    min-height: 34px;
+  }
+
+  /* ── Divider ── */
+  .section-divider {
+    margin: 32px 0;
+  }
+
+  /* ── Currently Working ── */
+  .currently-working {
+    margin-top: 0;
+  }
+
+  .inside-working {
+    flex-direction: row;         /* keep dot + text side-by-side */
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 14px;
+  }
+
+  .now-dot {
+    margin-top: 0.45rem;
+    flex-shrink: 0;
+  }
+
+  .now-writing {
+    font-size: 0.93rem;
+    line-height: 1.7;
+  }
+
+  /* ── Experience / Projects ── */
+  .experience-section {
+    margin-top: 0;
+  }
+
+  .proj-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .proj-card {
+    width: 100%;
+  }
+
+  .proj-name {
+    font-size: 1.2rem;
+  }
+
+  .proj-desc {
+    font-size: 0.88rem;
+  }
+
+  /* ── Skills ── */
+  .skills-section {
+    margin-top: 0;
+  }
+
+  /* Scrollable tab row — increase tap area on labels */
+  .skill-filter {
+    gap: 0 1.4rem;
+    padding-bottom: 6px;
+  }
+
+  .skill-filter label {
+    font-size: 0.72rem;
+    padding: 0.5rem 0;           /* bigger vertical tap target */
+    letter-spacing: 0.1em;
+  }
+
+  .skill-panel-desc {
+    font-size: 0.86rem;
+  }
+
+  .chip {
+    font-size: 0.82rem;
+    padding: 0.38rem 0.78rem;
+  }
+
+  /* ── Education ── */
+  .education-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+
+  .education-degree {
+    font-size: 1.1rem;
+    line-height: 1.25;
+  }
+
+  .education-year {
+    font-size: 0.78rem;
+  }
+
+  .education-inst {
+    font-size: 0.88rem;
+  }
+
+  .education-courses {
+    font-size: 0.82rem;
+  }
+
+  /* ── Contact / Footer ── */
+  .contact-cta-line {
+    font-size: clamp(1rem, 4.5vw, 1.3rem);
+    line-height: 1.45;
+    word-break: break-word;
+  }
+
+  .contact-social {
+    gap: 0.4rem 1.1rem;
+    row-gap: 0.55rem;
+  }
+
+  .contact-social a {
+    font-size: 0.82rem;
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    padding-bottom: 2rem;
+  }
+
+  .footer-name,
+  .footer-note {
+    font-size: 0.78rem;
+  }
+
+  /* ── Section labels ── */
+  .section-label {
+    font-size: 0.92rem;
+    margin-bottom: 1.1rem;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* ── Extra small: very narrow phones (< 390px) ── */
+@media (max-width: 390px) {
+  body {
+    padding: 0 0.85rem;
+  }
+
+  .name {
+    font-size: 1.9rem;
+  }
+
+  .tagline {
+    font-size: 0.68rem;
+  }
+
+  .links {
+    gap: 0.5rem 0.8rem;
+  }
+
+  .skill-filter {
+    gap: 0 1rem;
+  }
+}
