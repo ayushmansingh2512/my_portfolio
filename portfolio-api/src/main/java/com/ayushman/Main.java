@@ -8,6 +8,6 @@ public class Main {
 
     public static void main(String[] args) {
         // This line fires up the internal web server
-        SpringApplication.run(Main.class, args); 
+        SpringApplication.run(Main.class, args);
     }
 }

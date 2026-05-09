@@ -1,22 +1,67 @@
-*{
-margin:0;
-padding: 0;
+/* ───────────────────────────────────────────
+   DESIGN TOKENS  (light mode = default)
+─────────────────────────────────────────── */
+:root {
+  --bg:        #F0EEE6;
+  --bg-card:   #E8E5DC;
+  --ink:       #1C1A16;
+  --ink-mid:   #5A5750;
+  --ink-light: #9A9790;
+  --rule:      #d4cec3;
+  --accent:    #8C6A4E;
+  --chip-bg:   #F0EEE6;
+
+  /* fonts */
+  --font-body:    'Inter', sans-serif;
+  --font-heading: 'DM Mono', 'Courier New', monospace;
+}
+
+/* ── DARK MODE ── */
+html.dark {
+  --bg:        #141210;
+  --bg-card:   #1E1C19;
+  --ink:       #EDEBE3;
+  --ink-mid:   #A8A49C;
+  --ink-light: #6B6762;
+  --rule:      #2E2C28;
+  --accent:    #C8956A;
+  --chip-bg:   #242220;
+}
+
+/* Respect OS-level dark preference ONLY if no manual toggle set */
+@media (prefers-color-scheme: dark) {
+  html:not(.light) {
+    --bg:        #141210;
+    --bg-card:   #1E1C19;
+    --ink:       #EDEBE3;
+    --ink-mid:   #A8A49C;
+    --ink-light: #6B6762;
+    --rule:      #2E2C28;
+    --accent:    #C8956A;
+    --chip-bg:   #242220;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  background: #F0EEE6;
-  color: #1C1A16;
-  font-family: 'DM Mono', 'Courier New', monospace;
-  font-weight: 300;
-  line-height: 1.7;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.8;
   min-height: 100vh;
   padding: 0 1.5rem;
   opacity: 0;
   animation: fadeIn 0.9s ease forwards;
   transition: background 0.3s, color 0.3s;
-  margin:20;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -24,34 +69,67 @@ body {
   to { opacity: 1; }
 }
 
-.header{
-	margin-top:48px;
-	width : 700px;
-	font-weight:lighter;
+/* ─────────────────────────────────────────
+   DARK / LIGHT TOGGLE BUTTON
+───────────────────────────────────────── */
+.theme-toggle {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.5rem;
+  z-index: 999;
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  color: var(--ink-mid);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  font-size: 1.1rem;
 }
 
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: scale(1.08);
+}
+
+/* ─────────────────────────────────────────
+   HEADER
+───────────────────────────────────────── */
+.header {
+  margin-top: 56px;
+  width: 700px;
+}
+
+/* 🔺 NAME — typewriter font, very large & bold */
 .name {
+  font-family: var(--font-heading);
   font-size: clamp(2.6rem, 6vw, 3.8rem);
-  font-weight: 300;
+  font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.05;
-  color: #1C1A16;
+  color: var(--ink);
   margin-bottom: 0.5rem;
 }
 
 .tagline {
-  font-size: 0.72rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #5A5750;
+  color: var(--ink-mid);
   margin-bottom: 1.1rem;
 }
 
 .bio {
-  font-size: 0.82rem;
-  color: #5A5750;
-  line-height: 1.75;
- 
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--ink-mid);
+  line-height: 1.85;
   margin-bottom: 1.6rem;
 }
 
@@ -59,13 +137,13 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 1.4rem;
-  font-size: 0.72rem;
+  font-size: 0.88rem;
   letter-spacing: 0.06em;
   align-items: center;
 }
 
 .links a {
-  color: #5A5750;
+  color: var(--ink-mid);
   text-decoration: none;
   transition: color 0.2s;
   display: inline-flex;
@@ -74,31 +152,32 @@ body {
 }
 
 .links a:hover {
-  color: #8C6A4E;
+  color: var(--accent);
 }
 
 .links a svg {
-  width: 11px;
-  height: 11px;
+  width: 13px;
+  height: 13px;
   stroke: currentColor;
   fill: none;
   stroke-width: 1.8;
 }
 
 .cv-btn {
-  font-size: 0.62rem;
-  font-weight: 300;
+  font-size: 0.78rem;
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #F0EEE6 !important;
-  background: #8C6A4E;
+  color: var(--bg) !important;
+  background: var(--accent);
   border: none;
-  padding: 0.38rem 0.85rem;
+  padding: 0.44rem 0.95rem;
   border-radius: 2px;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   transition: opacity 0.2s;
+  cursor: pointer;
 }
 
 .cv-btn:hover {
@@ -106,109 +185,112 @@ body {
 }
 
 .cv-btn svg {
-  width: 10px;
-  height: 10px;
+  width: 11px;
+  height: 11px;
   stroke: currentColor;
   fill: none;
   stroke-width: 2;
 }
 
+/* ─────────────────────────────────────────
+   DIVIDER
+───────────────────────────────────────── */
 .section-divider {
   width: 700px;
   height: 1px;
   margin: 48px 0;
-  background: #d4cec3;
+  background: var(--rule);
 }
 
-
-
-.currently-working{
-	width:700px
+/* ─────────────────────────────────────────
+   CURRENTLY WORKING
+───────────────────────────────────────── */
+.currently-working {
+  width: 700px;
 }
 
-.inside-working{
-	margin-top:16px;
-	padding : 10px 16px;
-	border : 1px;
-	display: flex;
-	gap: 10px;
-	border-radius:12px;
-	background-color:#E8E5DC;
+.inside-working {
+  margin-top: 16px;
+  padding: 12px 18px;
+  border: 1px solid var(--rule);
+  display: flex;
+  gap: 10px;
+  border-radius: 12px;
+  background-color: var(--bg-card);
+  transition: background 0.3s, border-color 0.3s;
 }
 
-.active{
-	display:flex;
-	flex-direction: column;
-	align-content:center;
-	gap:8px
+.active {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  gap: 8px;
 }
-.now-writing{
-	font-size:0.91rem;
+
+.now-writing {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink);
 }
 
 .now-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #8C6A4E; /* Hardcoded brown accent color */
-  margin-top: 0.52rem;
+  background: var(--accent);
+  margin-top: 0.55rem;
   flex-shrink: 0;
   animation: pulse 2.2s ease-in-out infinite;
 }
 
 @keyframes pulse {
-  /* At the start (0%) and end (100%), it is fully visible and full size */
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  /* Halfway through (50%), it fades out to 35% opacity and shrinks to 65% of its size */
-  50% {
-    opacity: 0.35;
-    transform: scale(0.65);
-  }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.35; transform: scale(0.65); }
 }
 
-/* ── EXPERIENCE SECTION WRAPPER ── */
+/* ─────────────────────────────────────────
+   SECTION LABEL (typewriter, bigger)
+───────────────────────────────────────── */
+.section-label {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+
+/* ─────────────────────────────────────────
+   EXPERIENCE / PROJECTS
+───────────────────────────────────────── */
 .experience-section {
   width: 700px;
   margin-top: 20px;
 }
 
-.section-label {
-  font-size: 0.62rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #9A9790;
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-}
-
-/* ── DYNAMIC PROJECT CARDS ── */
 .proj-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 cards side-by-side */
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
 
 .proj-card {
-  width:340px;
-  border: 1px solid #d4cec3;
+  width: 340px;
+  border: 1px solid var(--rule);
   border-radius: 12px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: border-color 0.2s, transform 0.2s;
-  background-color: transparent;
+  transition: border-color 0.2s, transform 0.2s, background 0.3s;
+  background-color: var(--bg-card);
 }
 
 .proj-card:hover {
-  border-color: #5A5750;
-  transform: translateY(-2px); /* Slight lift effect on hover */
+  border-color: var(--ink-mid);
+  transform: translateY(-2px);
 }
 
-/* Image handling */
 .proj-img {
   width: 100%;
   aspect-ratio: 16/9;
@@ -219,7 +301,7 @@ body {
 .proj-img-placeholder {
   width: 100%;
   aspect-ratio: 16/9;
-  background-color: #E8E5DC;
+  background-color: var(--bg-card);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -228,12 +310,11 @@ body {
 .proj-img-placeholder svg {
   width: 28px;
   height: 28px;
-  stroke: #C0BCB2;
+  stroke: var(--rule);
   fill: none;
   stroke-width: 1.2;
 }
 
-/* Text inside the card */
 .proj-body {
   padding: 1rem 1.2rem 1.2rem;
   display: flex;
@@ -242,21 +323,23 @@ body {
   flex: 1;
 }
 
+/* 🔺 Project title — typewriter font, large & bold */
 .proj-name {
-  font-size: 1.15rem;
-  font-weight: 500;
-  color: #1C1A16;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 400;      /* Special Elite is already bold-looking */
+  color: var(--ink);
   line-height: 1.2;
 }
 
 .proj-desc {
-  font-size: 0.74rem;
-  color: #5A5750;
-  line-height: 1.65;
-  flex: 1; /* Pushes the links to the bottom if descriptions are different lengths */
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--ink-mid);
+  line-height: 1.75;
+  flex: 1;
 }
 
-/* The Tech Stack Array Chips */
 .proj-tech {
   display: flex;
   flex-wrap: wrap;
@@ -265,30 +348,32 @@ body {
 }
 
 .proj-tech span {
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #5A5750;
-  border: 1px solid #d4cec3;
-  padding: 0.25rem 0.5rem;
+  color: var(--ink-mid);
+  border: 1px solid var(--rule);
+  padding: 0.28rem 0.55rem;
   border-radius: 6px;
-  background-color: #F0EEE6;
+  background-color: var(--chip-bg);
+  transition: background 0.3s, border-color 0.3s;
 }
 
-/* GitHub and Live Links */
 .proj-links {
   display: flex;
   gap: 1.2rem;
   margin-top: 0.8rem;
   padding-top: 0.8rem;
-  border-top: 1px solid #d4cec3;
+  border-top: 1px solid var(--rule);
 }
 
 .proj-links a {
-  font-size: 0.65rem;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #5A5750;
+  color: var(--ink-mid);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -298,73 +383,81 @@ body {
 }
 
 .proj-links a:hover {
-  color: #8C6A4E;
+  color: var(--accent);
 }
 
 .proj-links a svg {
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 13px;
   stroke: currentColor;
   fill: none;
   stroke-width: 2;
 }
 
-
+/* ─────────────────────────────────────────
+   SKILLS
+───────────────────────────────────────── */
 .skills-section {
   width: 700px;
   margin-top: 48px;
 }
 
-/* ── RADIO FILTER ── */
-
+/* ── one-line scrollable filter row ── */
 .skill-filter {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0 1.6rem;
+  flex-wrap: nowrap;          /* ← forces single line */
+  gap: 0 1.2rem;
   margin-bottom: 1.6rem;
+  overflow-x: auto;           /* scroll if viewport too narrow */
+  padding-bottom: 4px;        /* room for underline */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;      /* hide scrollbar on Firefox */
 }
 
-/* Hide the actual circles */
+.skill-filter::-webkit-scrollbar {
+  display: none;              /* hide scrollbar on Chrome/Safari */
+}
+
 .skill-filter input[type="radio"] {
   display: none;
 }
 
-/* Style the labels as the buttons */
 .skill-filter label {
-  font-size: 0.68rem;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #9A9790; /* ink-light */
+  color: var(--ink-light);
   cursor: pointer;
   padding-bottom: 4px;
   border-bottom: 1px solid transparent;
   transition: all 0.2s ease;
   user-select: none;
+  white-space: nowrap;        /* prevent label text wrapping */
 }
 
 .skill-filter label:hover {
-  color: #5A5750; /* ink-mid */
+  color: var(--ink-mid);
 }
 
-/* The magic: when radio is checked, change the label next to it */
 .skill-filter input[type="radio"]:checked + label {
-  color: #1C1A16; /* ink */
-  border-bottom-color: #8C6A4E; /* accent brown */
+  color: var(--ink);
+  border-bottom-color: var(--accent);
 }
 
-/* ── CONTENT PANEL ── */
 .skill-panel {
   animation: panelIn 0.3s ease forwards;
 }
 
 @keyframes panelIn {
   from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .skill-panel-desc {
-  font-size: 0.75rem;
-  color: #9A9790;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--ink-light);
   margin-bottom: 1.2rem;
   font-style: italic;
 }
@@ -376,19 +469,23 @@ body {
 }
 
 .chip {
-  font-size: 0.72rem;
-  color: #5A5750;
-  border: 0.5px solid #D5D2C8; /* rule color */
-  padding: 0.3rem 0.8rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--ink-mid);
+  border: 0.5px solid var(--rule);
+  padding: 0.32rem 0.85rem;
   border-radius: 2px;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease, background 0.3s, border-color 0.3s;
 }
 
 .chip:hover {
-  border-color: #8C6A4E;
-  color: #8C6A4E;
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
+/* ─────────────────────────────────────────
+   EDUCATION
+───────────────────────────────────────── */
 .education-section {
   width: 700px;
 }
@@ -413,29 +510,37 @@ body {
   flex-wrap: wrap;
 }
 
+/* 🔺 Degree — typewriter font, large & bold */
 .education-degree {
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: #1C1A16;
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--ink);
 }
 
 .education-year {
-  font-size: 0.68rem;
-  color: #9A9790;
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  color: var(--ink-light);
   letter-spacing: 0.08em;
 }
 
 .education-inst {
-  font-size: 0.75rem;
-  color: #5A5750;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink-mid);
 }
 
 .education-courses {
-  font-size: 0.72rem;
-  color: #9A9790;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--ink-light);
   font-style: italic;
 }
 
+/* ─────────────────────────────────────────
+   CONTACT CTA
+───────────────────────────────────────── */
 .contact-cta {
   width: 700px;
   display: flex;
@@ -443,22 +548,24 @@ body {
   gap: 0.6rem;
 }
 
+/* 🔺 CTA lines — typewriter font, very large */
 .contact-cta-line {
-  font-size: clamp(1.5rem, 4vw, 2.2rem);
-  font-weight: 300;
-  color: #1C1A16;
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 2.8vw, 1.6rem);
+  font-weight: 400;
+  color: var(--ink);
   line-height: 1.25;
 }
 
 .contact-cta-line a {
-  color: #8C6A4E;
+  color: var(--accent);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s;
 }
 
 .contact-cta-line a:hover {
-  border-bottom-color: #8C6A4E;
+  border-bottom-color: var(--accent);
 }
 
 .contact-social {
@@ -469,17 +576,21 @@ body {
 }
 
 .contact-social a {
-  font-size: 0.68rem;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
   letter-spacing: 0.1em;
-  color: #9A9790;
+  color: var(--ink-light);
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .contact-social a:hover {
-  color: #8C6A4E;
+  color: var(--accent);
 }
 
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
 .footer {
   width: 700px;
   display: flex;
@@ -489,22 +600,27 @@ body {
   gap: 0.5rem;
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #d4cec3;
+  border-top: 1px solid var(--rule);
   padding-bottom: 2rem;
 }
 
 .footer-name {
-  font-size: 0.9rem;
-  color: #9A9790;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink-light);
   letter-spacing: 0.04em;
 }
 
 .footer-note {
-  font-size: 0.65rem;
-  color: #9A9790;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--ink-light);
   letter-spacing: 0.06em;
 }
 
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
 @media (max-width: 768px) {
   body {
     padding: 0 1rem;
@@ -525,15 +641,6 @@ body {
     margin: 32px 0;
   }
 
-  .header h1 {
-    font-size: 40px;
-  }
-
-  .list_header {
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-  }
-
   .proj-grid {
     grid-template-columns: 1fr;
   }
@@ -544,5 +651,10 @@ body {
 
   .inside-working {
     flex-direction: column;
+  }
+
+  .theme-toggle {
+    top: 0.8rem;
+    right: 0.8rem;
   }
 }
