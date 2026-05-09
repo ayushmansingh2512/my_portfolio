@@ -18,7 +18,7 @@ const  Experience: React.FC = () => {
 
     fetch(`${apiBase}/api/projects`)
       .then((response) => response.json())
-      .then((data: Project[]) => setProject([...data].sort((a, b) => a.projectId - b.projectId)))
+      .then((data: Project[]) => setProject([...data].sort((a, b) => b.projectId - a.projectId)))
       .catch((error) => console.error("database connection error" , error));
   },[]);
 
