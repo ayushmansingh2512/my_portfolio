@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 // Define our types for better safety
 type SkillCategory =
@@ -15,6 +15,9 @@ interface SkillData {
 
 const Skills: React.FC = () => {
   const [activeTab, setActiveTab] = useState<SkillCategory>('Languages');
+  const [isDragging, setIsDragging] = useState(false);
+  const filterRef = useRef<HTMLDivElement | null>(null);
+  const dragState = useRef({ startX: 0, scrollLeft: 0, hasDragged: false });
 
   const skillMap: Record<SkillCategory, SkillData> = {
     'Languages': {
@@ -71,7 +74,54 @@ const Skills: React.FC = () => {
       <h3 className="section-label">Skills</h3>
 
       {/* Radio Filter Logic */}
-      <div className="skill-filter">
+      <div
+        className={`skill-filter${isDragging ? " dragging" : ""}`}
+        ref={filterRef}
+        onPointerDown={(event) => {
+          if (event.pointerType !== "mouse") return;
+          const el = filterRef.current;
+          if (!el) return;
+          el.setPointerCapture(event.pointerId);
+          dragState.current = {
+            startX: event.clientX,
+            scrollLeft: el.scrollLeft,
+            hasDragged: false
+          };
+          setIsDragging(true);
+        }}
+        onPointerMove={(event) => {
+          if (event.pointerType !== "mouse" || !isDragging) return;
+          const el = filterRef.current;
+          if (!el) return;
+          const dx = event.clientX - dragState.current.startX;
+          if (Math.abs(dx) > 4) dragState.current.hasDragged = true;
+          el.scrollLeft = dragState.current.scrollLeft - dx;
+          event.preventDefault();
+        }}
+        onPointerUp={(event) => {
+          if (event.pointerType !== "mouse") return;
+          const el = filterRef.current;
+          if (el && el.hasPointerCapture(event.pointerId)) {
+            el.releasePointerCapture(event.pointerId);
+          }
+          setIsDragging(false);
+        }}
+        onPointerCancel={(event) => {
+          if (event.pointerType !== "mouse") return;
+          const el = filterRef.current;
+          if (el && el.hasPointerCapture(event.pointerId)) {
+            el.releasePointerCapture(event.pointerId);
+          }
+          setIsDragging(false);
+        }}
+        onClickCapture={(event) => {
+          if (dragState.current.hasDragged) {
+            event.preventDefault();
+            event.stopPropagation();
+            dragState.current.hasDragged = false;
+          }
+        }}
+      >
         {(Object.keys(skillMap) as SkillCategory[]).map((cat) => (
           <React.Fragment key={cat}>
             <input 

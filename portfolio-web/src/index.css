@@ -444,7 +444,11 @@ body {
   padding-bottom: 4px;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
 }
+
+.skill-filter.dragging { cursor: grabbing; }
 
 .skill-filter::-webkit-scrollbar { display: none; }
 
