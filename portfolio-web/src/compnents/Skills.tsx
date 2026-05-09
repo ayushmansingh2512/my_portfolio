@@ -17,7 +17,7 @@ const Skills: React.FC = () => {
   const [activeTab, setActiveTab] = useState<SkillCategory>('Languages');
   const [isDragging, setIsDragging] = useState(false);
   const filterRef = useRef<HTMLDivElement | null>(null);
-  const dragState = useRef({ startX: 0, scrollLeft: 0, hasDragged: false, isPointerDown: false });
+  const dragState = useRef({ startX: 0, scrollLeft: 0, isMouseDown: false, isDragging: false });
 
   const skillMap: Record<SkillCategory, SkillData> = {
     'Languages': {
@@ -77,56 +77,40 @@ const Skills: React.FC = () => {
       <div
         className={`skill-filter${isDragging ? " dragging" : ""}`}
         ref={filterRef}
-        onPointerDown={(event) => {
-          if (event.pointerType !== "mouse") return;
+        onMouseDown={(event) => {
+          if (event.button !== 0) return;
           const el = filterRef.current;
           if (!el) return;
-          el.setPointerCapture(event.pointerId);
           dragState.current = {
             startX: event.clientX,
             scrollLeft: el.scrollLeft,
-            hasDragged: false,
-            isPointerDown: true
+            isMouseDown: true,
+            isDragging: false
           };
         }}
-        onPointerMove={(event) => {
-          if (event.pointerType !== "mouse" || !dragState.current.isPointerDown) return;
+        onMouseMove={(event) => {
+          if (!dragState.current.isMouseDown) return;
           const el = filterRef.current;
           if (!el) return;
           const dx = event.clientX - dragState.current.startX;
-          if (Math.abs(dx) > 4) {
-            if (!dragState.current.hasDragged) {
-              dragState.current.hasDragged = true;
-              setIsDragging(true);
-            }
+          if (Math.abs(dx) > 4 && !dragState.current.isDragging) {
+            dragState.current.isDragging = true;
+            setIsDragging(true);
+          }
+          if (dragState.current.isDragging) {
             el.scrollLeft = dragState.current.scrollLeft - dx;
             event.preventDefault();
           }
         }}
-        onPointerUp={(event) => {
-          if (event.pointerType !== "mouse") return;
-          const el = filterRef.current;
-          if (el && el.hasPointerCapture(event.pointerId)) {
-            el.releasePointerCapture(event.pointerId);
-          }
-          dragState.current.isPointerDown = false;
+        onMouseUp={() => {
+          dragState.current.isMouseDown = false;
+          dragState.current.isDragging = false;
           setIsDragging(false);
         }}
-        onPointerCancel={(event) => {
-          if (event.pointerType !== "mouse") return;
-          const el = filterRef.current;
-          if (el && el.hasPointerCapture(event.pointerId)) {
-            el.releasePointerCapture(event.pointerId);
-          }
-          dragState.current.isPointerDown = false;
+        onMouseLeave={() => {
+          dragState.current.isMouseDown = false;
+          dragState.current.isDragging = false;
           setIsDragging(false);
-        }}
-        onClickCapture={(event) => {
-          if (dragState.current.hasDragged) {
-            event.preventDefault();
-            event.stopPropagation();
-            dragState.current.hasDragged = false;
-          }
         }}
       >
         {(Object.keys(skillMap) as SkillCategory[]).map((cat) => (
