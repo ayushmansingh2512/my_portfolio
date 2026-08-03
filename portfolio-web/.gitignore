@@ -12,6 +12,15 @@ dist
 dist-ssr
 *.local
 
+# Resume PDFs & local assets
+/resume/
+**/resume/
+
+# Environment
+.env
+.env.local
+.env.*
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

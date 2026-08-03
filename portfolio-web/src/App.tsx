@@ -2,17 +2,24 @@ import { useState, useEffect } from "react";
 import Header from "./compnents/Header";
 import SectionDivider from "./compnents/SectionDivider";
 import CurrentlyWorking from "./compnents/CurrentlyWorking";
-import Experience from "./compnents/Experience";
+import Experience, { type Project } from "./compnents/Experience";
 import Skills from "./compnents/Skills";
 import Education from "./compnents/Education";
 import Footer from "./compnents/Footer";
+import PageTransition from "./compnents/PageTransition";
+import CaseStudyView from "./compnents/CaseStudyView";
 
 const App = () => {
-  // Detect initial preference from OS
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [dark, setDark] = useState<boolean>(prefersDark);
+  const [activeCaseStudy, setActiveCaseStudy] = useState<Project | null>(null);
 
-  // Apply / remove .dark and .light classes on <html>
+  useEffect(() => {
+    if ((window as any).htmx) {
+      (window as any).htmx.process(document.body);
+    }
+  }, []);
+
   useEffect(() => {
     const html = document.documentElement;
     if (dark) {
@@ -36,17 +43,30 @@ const App = () => {
         {dark ? "☀️" : "🌙"}
       </button>
 
-      <Header />
-      <SectionDivider />
-      <CurrentlyWorking />
-      <SectionDivider />
-      <Experience />
-      <SectionDivider />
-      <Skills />
-      <SectionDivider />
-      <Education />
-      <SectionDivider />
-      <Footer />
+      <PageTransition triggerKey={activeCaseStudy ? `case-study-${activeCaseStudy.projectId}` : 'main-portfolio-page'}>
+        {activeCaseStudy ? (
+          /* FULL-SCREEN CASE STUDY VIEW — ONLY CASE STUDY CONTENT AND BACK BUTTON ARE VISIBLE */
+          <CaseStudyView 
+            project={activeCaseStudy} 
+            onClose={() => setActiveCaseStudy(null)} 
+          />
+        ) : (
+          /* HOME PORTFOLIO VIEW */
+          <>
+            <Header />
+            <SectionDivider />
+            <CurrentlyWorking />
+            <SectionDivider />
+            <Experience onSelectProject={setActiveCaseStudy} />
+            <SectionDivider />
+            <Skills />
+            <SectionDivider />
+            <Education />
+            <SectionDivider />
+            <Footer />
+          </>
+        )}
+      </PageTransition>
     </div>
   );
 };

@@ -13,6 +13,10 @@ Thumbs.db
 .project
 .settings/
 
+# Resume PDFs & sensitive docs
+/resume/
+**/resume/
+
 # Node
 **/node_modules/
 **/dist/
@@ -38,4 +42,3 @@ Thumbs.db
 
 # Spring Boot secrets (move to env vars)
 **/application-local.properties
-
