@@ -45,11 +45,17 @@ html.dark {
 ───────────────────────────────────────── */
 html {
   overflow-x: hidden;
+  scrollbar-gutter: stable;
 }
 
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+pre, code {
+  max-width: 100%;
   box-sizing: border-box;
 }
 
@@ -326,6 +332,9 @@ body {
               box-shadow 0.35s ease;
   position: relative;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
 }
 
 .proj-card:hover {
@@ -896,4 +905,25 @@ html.dark .proj-card:hover {
   transform: translateY(-4px);
   border-color: var(--accent);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* ─────────────────────────────────────────
+   CASE STUDY MOBILE RESPONSIVENESS
+───────────────────────────────────────── */
+.case-study-wrapper {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 5rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .case-study-wrapper {
+    padding: 1rem 0.5rem 4rem;
+  }
+
+  .case-study-hero div {
+    padding: 1.25rem 1rem !important;
+  }
 }

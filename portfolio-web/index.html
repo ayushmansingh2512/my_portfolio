@@ -27,14 +27,68 @@
   <!-- ⚡ HTMX Engine for AI Copilot Widget -->
   <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 
-  <!-- ⚡ Direct Copilot Embed Container -->
-  <aside id="ai-copilot-root" hx-get="https://universal-copilot.onrender.com/copilot/embed?app_id=ayushman_portfolio"
-    hx-trigger="load" hx-swap="innerHTML">
-  </aside>
-  <iframe src="https://universal-copilot.onrender.com/copilot/embed?app_id=ayushman_portfolio"
+  <style>
+    .copilot-iframe {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      z-index: 99999;
+      border: none;
+      width: 105px;
+      height: 105px;
+      background: transparent;
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .copilot-iframe.is-expanded {
+      width: min(440px, 100vw);
+      height: min(540px, 100dvh);
+    }
+
+    @media (max-width: 480px) {
+      .copilot-iframe {
+        bottom: 0;
+        right: 0;
+        width: 95px;
+        height: 95px;
+      }
+
+      .copilot-iframe.is-expanded {
+        width: 100vw;
+        height: min(540px, 100dvh);
+      }
+    }
+  </style>
+  <iframe src="https://universal-copilot.onrender.com/copilot/embed?app_id=ayushman_portfolio2"
     style="position: fixed; bottom: 20px; right: 20px; z-index: 99999; border: none; width: 380px; height: 520px; background: transparent;"
     allowtransparency="true">
   </iframe>
+
+  <script>
+    (function () {
+      const iframe = document.querySelector('.copilot-iframe');
+      if (!iframe) return;
+
+      // Expand iframe when user interacts with it
+      window.addEventListener('blur', () => {
+        if (document.activeElement === iframe) {
+          iframe.classList.add('is-expanded');
+        }
+      });
+
+      // Collapse iframe when user taps outside on the main window
+      window.addEventListener('click', (e) => {
+        if (iframe && !iframe.contains(e.target)) {
+          iframe.classList.remove('is-expanded');
+        }
+      });
+
+      // Handle touch on mobile to expand
+      iframe.addEventListener('touchstart', () => {
+        iframe.classList.add('is-expanded');
+      }, { passive: true });
+    })();
+  </script>
 </body>
 
 </html>
